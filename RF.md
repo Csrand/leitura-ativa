@@ -1,12 +1,10 @@
 # Especificação de Requisitos do Sistema
 
-Este documento apresenta a especificação de Requisitos Funcionais (RF) e Não Funcionais (RNF) para o sistema de leitura e reflexão, seguindo os padrões recomendados de engenharia de software.
+Este documento apresenta a especificação de Requisitos Funcionais (RF) e Não Funcionais (RNF) para o sistema de leitura e reflexão.
 
 ---
 
 ## 1. Requisitos Funcionais (RF)
-
-Estes requisitos descrevem as funções que o sistema deve executar, estruturados com o padrão Wiegers (*"O sistema deve..."*).
 
 ### 1.1 Autenticação e Controle de Acesso
 

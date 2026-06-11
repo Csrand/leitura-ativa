@@ -1,11 +1,10 @@
-import React, { useState, useCallback } from 'react'
-import { View, StyleSheet, ScrollView, Alert } from 'react-native'
-import { Text, Button } from 'react-native-elements'
-import { useAuthStore } from '../stores/auth-store'
-import { getReflections } from '../lib/db'
-import ReflectionCard from '../components/reflection-card'
+import React, { useState, useCallback, useEffect } from 'react'
+import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Alert } from 'react-native'
+import { useAuthStore } from '../../stores/auth-store'
+import { getReflections } from '../../lib/db'
+import ReflectionCard from '../../components/reflection-card'
 
-export default function HistoricoScreen({ navigation }) {
+export default function HistoricoScreen({ onNavigate }) {
   const user = useAuthStore((s) => s.user)
   const [reflections, setReflections] = useState([])
   const [loading, setLoading] = useState(true)
@@ -23,18 +22,15 @@ export default function HistoricoScreen({ navigation }) {
     }
   }, [user])
 
-  React.useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', loadReflections)
-    return unsubscribe
-  }, [loadReflections, navigation])
-
-  React.useEffect(() => { loadReflections() }, [loadReflections])
+  useEffect(() => { loadReflections() }, [loadReflections])
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.header}>
-        <Button title="Voltar" type="clear" onPress={() => navigation.goBack()} />
-        <Text h3>Histórico</Text>
+        <TouchableOpacity onPress={() => onNavigate('Home')}>
+          <Text style={styles.link}>Voltar</Text>
+        </TouchableOpacity>
+        <Text style={styles.title}>Histórico</Text>
         <View style={{ width: 60 }} />
       </View>
 
@@ -54,10 +50,9 @@ export default function HistoricoScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: { padding: 16, paddingTop: 60 },
   header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 24,
+    flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24,
   },
-  empty: { textAlign: 'center', color: 'gray', marginTop: 60 },
+  title: { fontSize: 22, fontWeight: 'bold' },
+  link: { color: '#2089dc', fontSize: 16 },
+  empty: { textAlign: 'center', color: 'gray', marginTop: 60, fontSize: 16 },
 })

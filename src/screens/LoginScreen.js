@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
-import { View, StyleSheet, Alert } from 'react-native'
-import { Text, Input, Button } from 'react-native-elements'
-import { useAuthStore } from '../stores/auth-store'
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, ActivityIndicator } from 'react-native'
+import { useAuthStore } from '../../stores/auth-store'
 
-export default function LoginScreen({ navigation }) {
+export default function LoginScreen({ onNavigate }) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
@@ -22,37 +21,42 @@ export default function LoginScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Text h2 style={styles.title}>LeituraAtiva</Text>
-      <Input
+      <Text style={styles.title}>LeituraAtiva</Text>
+      <TextInput
+        style={styles.input}
         placeholder="Email"
         value={email}
         onChangeText={setEmail}
         autoCapitalize="none"
         keyboardType="email-address"
       />
-      <Input
+      <TextInput
+        style={styles.input}
         placeholder="Senha"
         value={password}
         onChangeText={setPassword}
         secureTextEntry
       />
-      <Button
-        title="Entrar"
-        onPress={handleLogin}
-        loading={loading}
-        containerStyle={styles.button}
-      />
-      <Button
-        title="Criar conta"
-        type="clear"
-        onPress={() => navigation.navigate('Cadastro')}
-      />
+      <TouchableOpacity style={styles.button} onPress={handleLogin} disabled={loading}>
+        {loading ? <ActivityIndicator color="#fff" /> : <Text style={styles.buttonText}>Entrar</Text>}
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => onNavigate('Cadastro')}>
+        <Text style={styles.link}>Criar conta</Text>
+      </TouchableOpacity>
     </View>
   )
 }
 
 const styles = StyleSheet.create({
   container: { flex: 1, justifyContent: 'center', padding: 24 },
-  title: { textAlign: 'center', marginBottom: 32 },
-  button: { marginVertical: 8 },
+  title: { fontSize: 28, fontWeight: 'bold', textAlign: 'center', marginBottom: 32 },
+  input: {
+    borderWidth: 1, borderColor: '#ccc', borderRadius: 8, padding: 12, fontSize: 16,
+    marginBottom: 16, backgroundColor: '#fff',
+  },
+  button: {
+    backgroundColor: '#2089dc', padding: 14, borderRadius: 8, alignItems: 'center', marginVertical: 8,
+  },
+  buttonText: { color: '#fff', fontSize: 16, fontWeight: '600' },
+  link: { color: '#2089dc', textAlign: 'center', marginTop: 16, fontSize: 16 },
 })

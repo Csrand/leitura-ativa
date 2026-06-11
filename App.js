@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { ActivityIndicator, View } from 'react-native'
-import { NavigationContainer } from '@react-navigation/native'
-import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import { ActivityIndicator, View, StatusBar } from 'react-native'
 import { useAuthStore } from './stores/auth-store'
 import LoginScreen from './src/screens/LoginScreen'
 import CadastroScreen from './src/screens/CadastroScreen'
@@ -10,35 +8,20 @@ import LeituraScreen from './src/screens/LeituraScreen'
 import ReflexaoScreen from './src/screens/ReflexaoScreen'
 import HistoricoScreen from './src/screens/HistoricoScreen'
 
-const Stack = createNativeStackNavigator()
-
-function AuthStack() {
-  return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Login" component={LoginScreen} />
-      <Stack.Screen name="Cadastro" component={CadastroScreen} />
-    </Stack.Navigator>
-  )
-}
-
-function AppStack() {
-  return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Home" component={HomeScreen} />
-      <Stack.Screen name="Leitura" component={LeituraScreen} />
-      <Stack.Screen name="Reflexao" component={ReflexaoScreen} />
-      <Stack.Screen name="Historico" component={HistoricoScreen} />
-    </Stack.Navigator>
-  )
-}
-
 export default function App() {
   const { user, loading, initialize } = useAuthStore()
   const [ready, setReady] = useState(false)
+  const [screen, setScreen] = useState(null)
+  const [navParams, setNavParams] = useState({})
 
   useEffect(() => {
     initialize().then(() => setReady(true))
   }, [])
+
+  const navigate = (name, params = {}) => {
+    setScreen(name)
+    setNavParams(params)
+  }
 
   if (loading || !ready) {
     return (
@@ -48,9 +31,21 @@ export default function App() {
     )
   }
 
+  const currentScreen = screen || (user ? 'Home' : 'Login')
+
+  const screens = {
+    Login: <LoginScreen onNavigate={navigate} />,
+    Cadastro: <CadastroScreen onNavigate={navigate} />,
+    Home: <HomeScreen onNavigate={navigate} />,
+    Leitura: <LeituraScreen onNavigate={navigate} params={navParams} />,
+    Reflexao: <ReflexaoScreen onNavigate={navigate} />,
+    Historico: <HistoricoScreen onNavigate={navigate} />,
+  }
+
   return (
-    <NavigationContainer>
-      {user ? <AppStack /> : <AuthStack />}
-    </NavigationContainer>
+    <View style={{ flex: 1 }}>
+      <StatusBar barStyle="dark-content" />
+      {screens[currentScreen] || screens.Login}
+    </View>
   )
 }

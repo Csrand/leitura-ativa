@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
-import { View, StyleSheet } from 'react-native'
-import { Input, Button } from 'react-native-elements'
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, ActivityIndicator } from 'react-native'
 
 export default function BookForm({ onSubmit, onCancel }) {
   const [title, setTitle] = useState('')
@@ -19,29 +18,25 @@ export default function BookForm({ onSubmit, onCancel }) {
 
   return (
     <View style={styles.container}>
-      <Input
+      <TextInput
+        style={styles.input}
         placeholder="Título do livro"
         value={title}
         onChangeText={setTitle}
       />
-      <Input
+      <TextInput
+        style={styles.input}
         placeholder="Autor (opcional)"
         value={author}
         onChangeText={setAuthor}
       />
       <View style={styles.buttons}>
-        <Button
-          title="Salvar"
-          onPress={handleSubmit}
-          loading={loading}
-          containerStyle={styles.button}
-        />
-        <Button
-          title="Cancelar"
-          type="clear"
-          onPress={onCancel}
-          containerStyle={styles.button}
-        />
+        <TouchableOpacity style={styles.smallButton} onPress={handleSubmit} disabled={loading}>
+          {loading ? <ActivityIndicator color="#fff" /> : <Text style={styles.smallButtonText}>Salvar</Text>}
+        </TouchableOpacity>
+        <TouchableOpacity onPress={onCancel}>
+          <Text style={styles.cancelText}>Cancelar</Text>
+        </TouchableOpacity>
       </View>
     </View>
   )
@@ -49,12 +44,17 @@ export default function BookForm({ onSubmit, onCancel }) {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 12,
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: '#ddd',
-    marginTop: 8,
+    padding: 12, borderRadius: 8, borderWidth: 1, borderColor: '#ddd', marginTop: 8,
   },
-  buttons: { flexDirection: 'row', justifyContent: 'flex-end', gap: 8 },
-  button: { minWidth: 100 },
+  input: {
+    borderWidth: 1, borderColor: '#ccc', borderRadius: 8, padding: 10, fontSize: 16,
+    marginBottom: 12, backgroundColor: '#fff',
+  },
+  buttons: { flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center', gap: 12 },
+  smallButton: {
+    backgroundColor: '#2089dc', paddingHorizontal: 20, paddingVertical: 10, borderRadius: 8,
+    minWidth: 100, alignItems: 'center',
+  },
+  smallButtonText: { color: '#fff', fontWeight: '600' },
+  cancelText: { color: '#2089dc', fontSize: 16 },
 })

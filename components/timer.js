@@ -1,6 +1,5 @@
 import React from 'react'
-import { View, StyleSheet } from 'react-native'
-import { Text } from 'react-native-elements'
+import { View, Text, StyleSheet } from 'react-native'
 
 export default function Timer({ seconds }) {
   const mins = Math.floor(seconds / 60)
@@ -9,7 +8,7 @@ export default function Timer({ seconds }) {
 
   return (
     <View style={styles.container}>
-      <Text h1 style={styles.time}>{display}</Text>
+      <Text style={styles.time}>{display}</Text>
     </View>
   )
 }

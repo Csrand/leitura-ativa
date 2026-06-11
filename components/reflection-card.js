@@ -1,6 +1,5 @@
 import React from 'react'
-import { View, StyleSheet } from 'react-native'
-import { Text } from 'react-native-elements'
+import { View, Text, StyleSheet } from 'react-native'
 
 export default function ReflectionCard({ reflection }) {
   const mins = Math.floor(reflection.reading_time_seconds / 60)
@@ -31,18 +30,11 @@ export default function ReflectionCard({ reflection }) {
 
 const styles = StyleSheet.create({
   card: {
-    padding: 14,
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: '#ddd',
-    backgroundColor: '#f9f9f9',
-    marginBottom: 12,
+    padding: 14, borderRadius: 8, borderWidth: 1, borderColor: '#ddd',
+    backgroundColor: '#f9f9f9', marginBottom: 12,
   },
   header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 4,
+    flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4,
   },
   bookTitle: { fontSize: 16, fontWeight: '600' },
   date: { fontSize: 12, color: 'gray' },

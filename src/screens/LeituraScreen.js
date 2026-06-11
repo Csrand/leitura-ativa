@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react'
-import { View, StyleSheet } from 'react-native'
-import { Text, Button } from 'react-native-elements'
-import { useReadingStore } from '../stores/reading-store'
-import Timer from '../components/timer'
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
+import { useReadingStore } from '../../stores/reading-store'
+import Timer from '../../components/timer'
 
-export default function LeituraScreen({ navigation }) {
+export default function LeituraScreen({ onNavigate }) {
   const { book, mode, readingSeconds, readingTimeLimit, finishReading, reset, phase } =
     useReadingStore()
 
@@ -12,12 +11,8 @@ export default function LeituraScreen({ navigation }) {
     return () => { reset() }
   }, [])
 
-  useEffect(() => {
-    if (phase !== 'reading') return
-  }, [phase])
-
   if (!book) {
-    navigation.replace('Home')
+    onNavigate('Home')
     return null
   }
 
@@ -28,7 +23,7 @@ export default function LeituraScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Text h4 style={styles.bookTitle}>{book.title}</Text>
+      <Text style={styles.bookTitle}>{book.title}</Text>
       <Text style={styles.author}>{book.author}</Text>
 
       <View style={styles.timerContainer}>
@@ -38,32 +33,24 @@ export default function LeituraScreen({ navigation }) {
         </Text>
       </View>
 
-      <Button
-        title="Finalizar Sessão"
-        onPress={() => {
-          finishReading()
-          navigation.replace('Reflexao')
-        }}
-        buttonStyle={styles.finishButton}
-      />
+      <TouchableOpacity style={styles.finishButton} onPress={() => {
+        finishReading()
+        onNavigate('Reflexao')
+      }}>
+        <Text style={styles.finishButtonText}>Finalizar Sessão</Text>
+      </TouchableOpacity>
     </View>
   )
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 24,
-  },
-  bookTitle: { textAlign: 'center', marginBottom: 4 },
-  author: { textAlign: 'center', color: 'gray', marginBottom: 48 },
+  container: { flex: 1, justifyContent: 'center', alignItems: 'center', padding: 24 },
+  bookTitle: { fontSize: 20, fontWeight: '600', textAlign: 'center', marginBottom: 4 },
+  author: { fontSize: 14, color: 'gray', textAlign: 'center', marginBottom: 48 },
   timerContainer: { alignItems: 'center', marginBottom: 64 },
-  modeLabel: { marginTop: 8, color: 'gray', letterSpacing: 2 },
+  modeLabel: { marginTop: 8, color: 'gray', letterSpacing: 2, fontSize: 12 },
   finishButton: {
-    paddingHorizontal: 32,
-    paddingVertical: 14,
-    backgroundColor: '#e74c3c',
+    paddingHorizontal: 32, paddingVertical: 14, backgroundColor: '#e74c3c', borderRadius: 8,
   },
+  finishButtonText: { color: '#fff', fontSize: 16, fontWeight: '600' },
 })

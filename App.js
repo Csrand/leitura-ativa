@@ -15,7 +15,7 @@ export default function App() {
   const [navParams, setNavParams] = useState({})
 
   useEffect(() => {
-    initialize().then(() => setReady(true))
+    initialize().finally(() => setReady(true))
   }, [])
 
   const navigate = (name, params = {}) => {

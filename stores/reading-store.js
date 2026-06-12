@@ -1,6 +1,6 @@
-import { create } from 'zustand'
+import { createStore } from '../lib/store'
 
-export const useReadingStore = create((set, get) => ({
+export const useReadingStore = createStore((set, get) => ({
   phase: 'idle',
   mode: null,
   book: null,

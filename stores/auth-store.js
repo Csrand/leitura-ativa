@@ -1,32 +1,19 @@
 import { createStore } from '../lib/store'
-import { supabase } from '../lib/supabase'
 
-export const useAuthStore = createStore((set) => ({
+export const useAuthStore = createStore(() => ({
   user: null,
   session: null,
-  loading: true,
+  loading: false,
 
-  initialize: async () => {
-    const { data } = await supabase.auth.getSession()
-    set({ session: data.session, user: data.session?.user ?? null, loading: false })
+  initialize: async () => {},
 
-    supabase.auth.onAuthStateChange((_event, session) => {
-      set({ session, user: session?.user ?? null })
-    })
+  signIn: async (_email, _password) => {
+    throw new Error('Supabase não configurado')
   },
 
-  signIn: async (email, password) => {
-    const { error } = await supabase.auth.signInWithPassword({ email, password })
-    if (error) throw error
+  signUp: async (_email, _password) => {
+    throw new Error('Supabase não configurado')
   },
 
-  signUp: async (email, password) => {
-    const { error } = await supabase.auth.signUp({ email, password })
-    if (error) throw error
-  },
-
-  signOut: async () => {
-    await supabase.auth.signOut()
-    set({ user: null, session: null })
-  },
+  signOut: async () => {},
 }))

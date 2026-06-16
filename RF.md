@@ -6,46 +6,38 @@ Este documento apresenta a especificação de Requisitos Funcionais (RF) e Não 
 
 ## 1. Requisitos Funcionais (RF)
 
-### 1.1 Autenticação e Controle de Acesso
+### 1.1 Gestão de Livros
 
 | ID | Descrição |
 | :--- | :--- |
-| **RF-01** | O sistema deve permitir que um visitante crie uma nova conta de usuário fornecendo um endereço de e-mail válido e uma senha. |
-| **RF-02** | O sistema deve permitir que um usuário registrado autentique-se na plataforma utilizando seu e-mail e senha. |
-| **RF-03** | O sistema deve bloquear o acesso às telas principais (*Home, Leitura, Reflexão e Histórico*) para usuários que não possuam uma sessão ativa (*Auth Guard*). |
+| **RF-01** | O sistema deve permitir que um usuário autenticado cadastre um novo livro, sendo obrigatório fornecer o "Título" e opcional o "Autor". |
+| **RF-02** | O sistema deve exibir na tela inicial (*Home*) uma lista de todos os livros cadastrados pelo usuário autenticado. |
 
-### 1.2 Gestão de Livros
-
-| ID | Descrição |
-| :--- | :--- |
-| **RF-04** | O sistema deve permitir que um usuário autenticado cadastre um novo livro, sendo obrigatório fornecer o "Título" e opcional o "Autor". |
-| **RF-05** | O sistema deve exibir na tela inicial (*Home*) uma lista de todos os livros cadastrados pelo usuário autenticado. |
-
-### 1.3 Sessão de Leitura
+### 1.2 Sessão de Leitura
 
 | ID | Descrição |
 | :--- | :--- |
-| **RF-06** | O sistema deve exigir que o usuário selecione um livro da sua lista antes de iniciar uma sessão. |
-| **RF-07** | O sistema deve permitir que o usuário escolha entre os modos de leitura "Timer" ou "Cronômetro" antes de iniciar a sessão. |
-| **RF-08** | Quando o modo "Timer" for selecionado, o sistema deve fornecer um campo numérico para o usuário definir o tempo desejado de leitura em minutos. |
-| **RF-09** | O sistema deve exibir de forma contínua o tempo decorrido (modo Cronômetro) ou o tempo restante (modo Timer) durante a sessão de leitura ativa. |
-| **RF-10** | O sistema deve disponibilizar um controle acionável a qualquer momento para o usuário encerrar a sessão de leitura manualmente. |
+| **RF-03** | O sistema deve exigir que o usuário selecione um livro da sua lista antes de iniciar uma sessão. |
+| **RF-04** | O sistema deve permitir que o usuário escolha entre os modos de leitura "Timer" ou "Cronômetro" antes de iniciar a sessão. |
+| **RF-05** | Quando o modo "Timer" for selecionado, o sistema deve fornecer um campo numérico para o usuário definir o tempo desejado de leitura em minutos. |
+| **RF-06** | O sistema deve exibir de forma contínua o tempo decorrido (modo Cronômetro) ou o tempo restante (modo Timer) durante a sessão de leitura ativa. |
+| **RF-07** | O sistema deve disponibilizar um controle acionável a qualquer momento para o usuário encerrar a sessão de leitura manualmente. |
 
-### 1.4 Reflexão e Registro
-
-| ID | Descrição |
-| :--- | :--- |
-| **RF-11** | Imediatamente após o encerramento da sessão de leitura, o sistema deve calcular automaticamente um "Tempo de Reflexão", equivalente a 20% do tempo total de leitura registrado. |
-| **RF-12** | O sistema deve exibir uma tela de espera instruindo o usuário a refletir, acompanhada de um contador regressivo correspondente ao Tempo de Reflexão calculado no **RF-11**. |
-| **RF-13** | Após o término do contador de reflexão, o sistema deve liberar um campo de texto para que o usuário digite seus pensamentos e insights. |
-| **RF-14** | O sistema deve permitir que o usuário salve o texto da reflexão. Ao salvar, o sistema deve registrar no banco de dados: ID do usuário, ID do livro, modo da sessão, tempo lido (segundos), tempo de reflexão (segundos) e o texto digitado. |
-
-### 1.5 Histórico e Visualização
+### 1.3 Reflexão e Registro
 
 | ID | Descrição |
 | :--- | :--- |
-| **RF-15** | O sistema deve exibir uma tela de histórico listando as reflexões salvas do usuário, ordenadas cronologicamente da mais recente para a mais antiga. |
-| **RF-16** | O sistema deve permitir que o usuário filtre os registros do histórico, exibindo apenas as reflexões associadas a um livro específico. |
+| **RF-08** | Imediatamente após o encerramento da sessão de leitura, o sistema deve calcular automaticamente um "Tempo de Reflexão", equivalente a 20% do tempo total de leitura registrado. |
+| **RF-09** | O sistema deve exibir uma tela de espera instruindo o usuário a refletir, acompanhada de um contador regressivo correspondente ao Tempo de Reflexão calculado no **RF-11**. |
+| **RF-10** | Após o término do contador de reflexão, o sistema deve liberar um campo de texto para que o usuário digite seus pensamentos e insights. |
+| **RF-11** | O sistema deve permitir que o usuário salve o texto da reflexão. Ao salvar, o sistema deve registrar no banco de dados: ID do usuário, ID do livro, modo da sessão, tempo lido (segundos), tempo de reflexão (segundos) e o texto digitado. |
+
+### 1.4 Histórico e Visualização
+
+| ID | Descrição |
+| :--- | :--- |
+| **RF-12** | O sistema deve exibir uma tela de histórico listando as reflexões salvas do usuário, ordenadas cronologicamente da mais recente para a mais antiga. |
+| **RF-13** | O sistema deve permitir que o usuário filtre os registros do histórico, exibindo apenas as reflexões associadas a um livro específico. |
 
 ---
 
